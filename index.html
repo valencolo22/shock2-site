@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SHOCK2 — Sobrecargado</title>
+<meta name="description" content="Shock2, banda de rock pesado de Argentina. Disco Sobrecargado, remeras, latas y stickers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800;900&family=Archivo:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --negro:#08070A;
+  --cromo:#D3D7DE;
+  --voltio:#F2CE16;
+  --violeta:#7B3FA0;
+  --humo:#A8A4AF;
+  --linea:rgba(211,215,222,.16);
+  --display:'Big Shoulders Display','Oswald','Arial Narrow',sans-serif;
+  --texto:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --mono:'Space Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--negro);color:var(--cromo);
+  font-family:var(--texto);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--voltio);outline-offset:3px}
+
+/* ---------- fondo fijo: el collage detras de todo ---------- */
+.sh-fondo{position:absolute;inset:0;z-index:-2;
+  background-image:url("img/fondo.webp");background-size:cover;background-position:center}
+.sh-velo{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(85% 65% at 20% 82%,rgba(123,63,160,.20),transparent 62%),
+    radial-gradient(75% 60% at 82% 16%,rgba(242,206,22,.07),transparent 60%),
+    linear-gradient(180deg,rgba(8,7,9,.62) 0%,rgba(8,7,9,.48) 40%,rgba(8,7,9,.64) 100%)}
+
+/* ---------- medidor de tension ---------- */
+.sh-medidor{position:relative;top:0;left:0;right:0;z-index:60;pointer-events:none}
+.sh-medidor-riel{height:3px;background:rgba(8,7,9,.6)}
+.sh-medidor-carga{height:100%;width:0;background:var(--voltio);
+  box-shadow:0 0 14px rgba(242,206,22,.75);transition:background .3s}
+.sh-medidor.pico .sh-medidor-carga{background:var(--violeta);
+  box-shadow:0 0 18px rgba(123,63,160,.95)}
+.sh-lectura{position:absolute;top:6px;right:16px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.14em;color:var(--humo);background:rgba(8,7,9,.7);padding:3px 8px;
+  border:1px solid var(--linea)}
+.sh-medidor.pico .sh-lectura{color:var(--violeta);border-color:rgba(123,63,160,.55)}
+
+/* ---------- cabezal centrado, sobre el collage ---------- */
+.sh-cabezal{position:relative;z-index:40;padding:34px 24px 26px;text-align:center}
+.sh-cabezal-logo{display:inline-block;line-height:0}
+.sh-cabezal-logo img{height:clamp(54px,8vw,94px);width:auto;
+  filter:drop-shadow(0 8px 26px rgba(8,7,9,.95))}
+.sh-nav-links{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 30px;
+  list-style:none;margin:26px 0 0;padding:0;
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.sh-nav-links a{color:var(--cromo);text-decoration:none;opacity:.8;transition:color .18s,opacity .18s;
+  text-shadow:0 1px 10px rgba(8,7,9,.9)}
+.sh-nav-links a:hover{color:var(--voltio);opacity:1}
+.sh-cabezal-icono{position:absolute;top:38px;color:var(--cromo);opacity:.75;
+  transition:color .18s,opacity .18s;line-height:0}
+.sh-cabezal-icono:hover{color:var(--voltio);opacity:1}
+.sh-cabezal-icono.izq{left:28px}
+.sh-cabezal-icono.der{right:28px}
+.sh-cabezal-icono svg{width:22px;height:22px;display:block;
+  filter:drop-shadow(0 1px 8px rgba(8,7,9,.9))}
+
+/* ---------- botones ---------- */
+.sh-btn{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:14px 24px;
+  border:1px solid var(--voltio);color:var(--voltio);background:transparent;cursor:pointer;
+  transition:background .18s,color .18s}
+.sh-btn:hover{background:var(--voltio);color:var(--negro)}
+.sh-btn.lleno{background:var(--voltio);color:var(--negro)}
+.sh-btn.lleno:hover{background:var(--cromo);border-color:var(--cromo)}
+.sh-btn.fantasma{border-color:var(--linea);color:var(--humo)}
+.sh-btn.fantasma:hover{border-color:var(--cromo);background:transparent;color:var(--cromo)}
+
+.sh-comprar{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--voltio);background:none;border:0;padding:0;cursor:pointer;
+  border-bottom:1px solid transparent;transition:border-color .18s}
+.sh-comprar:hover{border-bottom-color:var(--voltio)}
+
+/* ---------- hero ---------- */
+.sh-hero{position:relative;padding:56px 24px 104px}
+.sh-hero-grid{max-width:1140px;margin:0 auto;display:grid;
+  grid-template-columns:1fr .85fr;gap:56px;align-items:center}
+.sh-encabezado{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--voltio);margin:0 0 18px}
+.sh-wordmark{font-family:var(--display);font-weight:900;font-size:clamp(58px,9.5vw,132px);
+  line-height:.86;letter-spacing:.01em;margin:0;color:var(--cromo);text-transform:uppercase;
+  text-shadow:0 6px 40px rgba(8,7,9,.95)}
+.sh-subtitulo{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,54px);
+  line-height:1;letter-spacing:.04em;color:var(--voltio);margin:16px 0 0;text-transform:uppercase;
+  text-shadow:0 2px 18px rgba(8,7,9,.9)}
+.sh-bajada{max-width:38ch;color:var(--cromo);opacity:.88;margin:22px 0 30px;
+  text-shadow:0 1px 12px rgba(8,7,9,.95)}
+.sh-acciones{display:flex;flex-wrap:wrap;gap:12px}
+.sh-hero-art{margin:0}
+.sh-hero-art img{box-shadow:0 40px 90px rgba(0,0,0,.85)}
+
+/* ---------- cinta ---------- */
+.sh-cinta{border-block:1px solid var(--linea);overflow:hidden;padding:12px 0;
+  background:rgba(8,7,9,.45)}
+.sh-cinta-pista{display:flex;gap:38px;width:max-content;
+  font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--humo);white-space:nowrap}
+.sh-cinta-pista span{display:flex;align-items:center;gap:38px}
+.sh-cinta em{color:var(--voltio);font-style:normal}
+@keyframes sh-correr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---------- secciones ---------- */
+.sh-seccion{max-width:1140px;margin:0 auto;padding:100px 24px}
+.sh-titulo{font-family:var(--display);font-weight:900;font-size:clamp(44px,7vw,86px);
+  line-height:.9;letter-spacing:.02em;margin:0;text-transform:uppercase;
+  text-shadow:0 4px 30px rgba(8,7,9,.85)}
+.sh-nota{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--voltio);margin:0 0 12px}
+.sh-intro{color:var(--cromo);opacity:.86;max-width:52ch;margin:18px 0 0;
+  text-shadow:0 1px 12px rgba(8,7,9,.95)}
+.sh-cabecera{margin-bottom:56px}
+
+/* ---------- tienda: sin tarjetas, todo flotando ---------- */
+.sh-grupo{margin-top:80px}
+.sh-grupo:first-of-type{margin-top:0}
+.sh-grupo-cab{display:flex;align-items:baseline;justify-content:space-between;gap:20px;
+  border-bottom:1px solid var(--linea);padding-bottom:14px;margin-bottom:46px}
+.sh-grupo-cab h3{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,42px);
+  letter-spacing:.05em;text-transform:uppercase;margin:0;line-height:1}
+.sh-grupo-cab span{font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--humo);text-align:right}
+.sh-vitrina{display:grid;grid-template-columns:repeat(var(--cols,4),1fr);gap:28px;align-items:start}
+.sh-prod{padding-top:var(--sube,0px)}
+.sh-prod-img{height:var(--alto,300px);display:flex;align-items:flex-end;justify-content:center;
+  margin-bottom:22px}
+.sh-prod-img img{max-height:100%;width:auto;object-fit:contain;
+  filter:drop-shadow(0 26px 40px rgba(0,0,0,.85))}
+.sh-prod-img svg{height:100%;width:auto;overflow:visible}
+.sh-prod-quien{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--voltio);margin:0 0 5px}
+.sh-prod-nombre{font-family:var(--texto);font-weight:500;font-size:15px;margin:0 0 4px;
+  color:var(--cromo);text-shadow:0 1px 10px rgba(8,7,9,.9)}
+.sh-prod-desc{font-size:13px;color:var(--humo);margin:0 0 10px;
+  text-shadow:0 1px 10px rgba(8,7,9,.9)}
+.sh-edad{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--humo);margin:-30px 0 40px}
+.sh-prod-precio{font-family:var(--mono);font-size:15px;color:var(--voltio);margin:0 0 12px}
+.sh-pendiente{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--humo);margin:0 0 12px}
+.sh-talles{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px;padding:0;list-style:none}
+.sh-talles button{font-family:var(--mono);font-size:11px;padding:4px 10px;background:transparent;
+  border:1px solid var(--linea);color:var(--humo);cursor:pointer;transition:all .15s}
+.sh-talles button:hover{border-color:var(--cromo);color:var(--cromo)}
+.sh-talles button[aria-pressed="true"]{background:var(--voltio);border-color:var(--voltio);color:var(--negro)}
+.sh-envio{margin-top:64px;padding-top:22px;border-top:1px solid var(--linea);
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--humo);
+  display:flex;flex-wrap:wrap;gap:10px 34px}
+.sh-envio b{color:var(--cromo);font-weight:700}
+
+/* ---------- disco ---------- */
+.sh-disco-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+.sh-disco-grid img{box-shadow:0 40px 90px rgba(0,0,0,.85)}
+.sh-temas{list-style:none;margin:26px 0 0;padding:0;border-top:1px solid var(--linea)}
+.sh-temas li{display:flex;align-items:baseline;gap:16px;padding:12px 2px;
+  border-bottom:1px solid var(--linea);font-size:15px;text-shadow:0 1px 10px rgba(8,7,9,.9)}
+.sh-temas .n{font-family:var(--mono);font-size:12px;color:var(--voltio);min-width:26px}
+.sh-temas .dur{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--humo)}
+.sh-compra{display:flex;flex-wrap:wrap;align-items:center;gap:16px 26px;margin-top:32px;
+  padding-top:26px;border-top:1px solid var(--linea)}
+.sh-compra-cd{width:112px;flex:none;filter:drop-shadow(0 16px 26px rgba(0,0,0,.8))}
+.sh-compra-precio{font-family:var(--mono);font-weight:700;font-size:24px;color:var(--voltio);margin:0}
+.sh-compra-nota{font-size:13px;color:var(--humo);margin:4px 0 0;max-width:34ch}
+
+/* ---------- banda ---------- */
+.sh-integrantes{list-style:none;margin:44px 0 0;padding:0;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0}
+.sh-integrantes li{padding:24px 24px 24px 0;border-top:1px solid var(--linea)}
+.sh-int-nombre{display:block;font-family:var(--display);font-weight:800;font-size:34px;
+  letter-spacing:.06em;text-transform:uppercase;line-height:1}
+.sh-int-rol{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--voltio);margin-top:8px}
+
+/* ---------- contacto ---------- */
+.sh-contactos{list-style:none;margin:0;padding:0;border-top:1px solid var(--linea)}
+.sh-contactos li{border-bottom:1px solid var(--linea)}
+.sh-contactos a{display:grid;grid-template-columns:190px 1fr auto;gap:24px;align-items:center;
+  padding:26px 4px;text-decoration:none;transition:padding-left .2s,color .2s}
+.sh-contactos a:hover{padding-left:16px;color:var(--voltio)}
+.sh-cont-que{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--humo)}
+.sh-cont-dato{font-family:var(--display);font-weight:700;font-size:clamp(24px,3.4vw,38px);
+  letter-spacing:.03em;text-transform:uppercase;line-height:1.05}
+.sh-cont-flecha{font-family:var(--mono);font-size:18px;color:var(--humo)}
+.sh-contactos a:hover .sh-cont-flecha{color:var(--voltio)}
+
+/* ---------- pie ---------- */
+.sh-pie{border-top:1px solid var(--linea);background:rgba(8,7,9,.55);padding:34px 24px}
+.sh-pie-inner{max-width:1140px;margin:0 auto;font-family:var(--mono);font-size:11px;
+  letter-spacing:.08em;color:var(--humo);display:flex;flex-wrap:wrap;gap:10px 24px;
+  justify-content:space-between}
+
+/* ---------- aparicion al scrollear ---------- */
+.sh-revelar{opacity:1;transform:none}
+.sh-revelar.visible{opacity:1;transform:none}
+
+@media (max-width:1100px){
+  .sh-vitrina{grid-template-columns:repeat(3,1fr);gap:40px 24px}
+  .sh-prod{padding-top:0}
+}
+@media (max-width:760px){
+  .sh-vitrina{grid-template-columns:repeat(2,1fr);gap:36px 20px}
+}
+@media (max-width:640px){
+  .sh-cabezal{padding:64px 20px 22px}
+  .sh-cabezal-icono{top:22px}
+  .sh-cabezal-icono.izq{left:20px}
+  .sh-cabezal-icono.der{right:20px}
+  .sh-nav-links{gap:12px 22px;margin-top:22px}
+}
+@media (max-width:900px){
+  .sh-hero-grid,.sh-disco-grid{grid-template-columns:1fr;gap:40px}
+  .sh-hero-art{order:-1;max-width:420px}
+  .sh-seccion{padding:72px 20px}
+  .sh-contactos a{grid-template-columns:1fr auto;gap:6px 16px}
+  .sh-cont-que{grid-column:1/-1}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .sh-cinta-pista{animation:none}
+  .sh-revelar{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="sh-fondo"></div>
+<div class="sh-velo"></div>
+
+<div class="sh-medidor" id="medidor">
+  <div class="sh-medidor-riel"><div class="sh-medidor-carga" id="carga" style="width:18%"></div></div>
+  <div class="sh-lectura" id="lectura">0.0 A</div>
+</div>
+
+<header class="sh-cabezal">
+  <a class="sh-cabezal-icono izq" href="https://instagram.com/shock2.hr" target="_blank" rel="noopener" aria-label="Instagram de Shock2">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="5"/>
+      <circle cx="12" cy="12" r="4.1"/>
+      <circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/>
+    </svg>
+  </a>
+  <a class="sh-cabezal-logo" href="#top"><img src="img/logo.webp" alt="Shock2" width="872" height="334"></a>
+  <nav>
+    <ul class="sh-nav-links">
+      <li><a href="#tienda">Tienda</a></li>
+      <li><a href="#disco">El disco</a></li>
+      <li><a href="#banda">La banda</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+  <a class="sh-cabezal-icono der" href="#tienda" aria-label="Ir a la tienda">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+      <path d="M5 8h14l-1.2 12H6.2L5 8Z"/>
+      <path d="M9 8V6.4a3 3 0 0 1 6 0V8"/>
+    </svg>
+  </a>
+</header>
+
+<header class="sh-hero" id="top">
+  <div class="sh-hero-grid">
+    <div>
+      <p class="sh-encabezado">Rock pesado · Argentina</p>
+      <h1 class="sh-wordmark">Sobrecargado</h1>
+      <p class="sh-subtitulo">El disco nuevo</p>
+      <p class="sh-bajada">El disco nuevo ya salió. Conseguí el CD, la remera, la lata y los stickers directo de la banda.</p>
+      <div class="sh-acciones">
+        <a class="sh-btn lleno" href="#tienda">Ver la tienda</a>
+        <a class="sh-btn fantasma" href="#disco">Escuchar el disco</a>
+      </div>
+    </div>
+    <figure class="sh-hero-art">
+      <img src="img/cover.webp" alt="Tapa del disco Sobrecargado de Shock2" width="1180" height="1180">
+    </figure>
+  </div>
+</header>
+
+<div class="sh-cinta" aria-hidden="true">
+  <div class="sh-cinta-pista">
+    <span>Sobrecargado <em>⚡</em> Envíos a todo el país <em>⚡</em> Edición limitada <em>⚡</em> Sobrecargado <em>⚡</em> Envíos a todo el país <em>⚡</em> Edición limitada <em>⚡</em></span>
+    <span>Sobrecargado <em>⚡</em> Envíos a todo el país <em>⚡</em> Edición limitada <em>⚡</em> Sobrecargado <em>⚡</em> Envíos a todo el país <em>⚡</em> Edición limitada <em>⚡</em></span>
+  </div>
+</div>
+
+<!-- ===================== TIENDA ===================== -->
+<section class="sh-seccion" id="tienda">
+  <div class="sh-cabecera sh-revelar">
+    <p class="sh-nota">Tienda oficial</p>
+    <h2 class="sh-titulo">Llevate<br>algo puesto</h2>
+    <p class="sh-intro">Todo sale directo de la banda. Elegís el producto, se abre WhatsApp con el pedido escrito y arreglamos pago y envío por ahí.</p>
+  </div>
+
+  <div class="sh-grupo sh-revelar">
+    <div class="sh-grupo-cab"><h3>Remeras</h3><span>Talles S al XL</span></div>
+    <div class="sh-vitrina" style="--cols:3">
+    <article class="sh-prod sh-revelar" style="--alto:310px;--sube:44px">
+      <div class="sh-prod-img"><img src="img/remera_sobrecargado.webp" alt="Remera negra con las cuatro calaveras de Sobrecargado" loading="lazy"></div>
+      <h3 class="sh-prod-nombre">Sobrecargado</h3>
+      <p class="sh-prod-desc">Las cuatro calaveras al frente.</p>
+      <ul class="sh-talles" data-talles>
+        <li><button type="button" aria-pressed="false">S</button></li>
+        <li><button type="button" aria-pressed="false">M</button></li>
+        <li><button type="button" aria-pressed="false">L</button></li>
+        <li><button type="button" aria-pressed="false">XL</button></li>
+      </ul>
+      <p class="sh-prod-precio">$28.000</p>
+      <button class="sh-comprar" data-comprar="Remera Sobrecargado">Comprar &rarr;</button>
+    </article>
+    <article class="sh-prod sh-revelar" style="--alto:330px;--sube:0px">
+      <div class="sh-prod-img"><img src="img/remera_sp.webp" alt="Remera negra con la leyenda Super Problemitas en rojo" loading="lazy"></div>
+      <h3 class="sh-prod-nombre">Super Problemitas</h3>
+      <p class="sh-prod-desc">Del tema del disco.</p>
+      <ul class="sh-talles" data-talles>
+        <li><button type="button" aria-pressed="false">S</button></li>
+        <li><button type="button" aria-pressed="false">M</button></li>
+        <li><button type="button" aria-pressed="false">L</button></li>
+        <li><button type="button" aria-pressed="false">XL</button></li>
+      </ul>
+      <p class="sh-prod-precio">$28.000</p>
+      <button class="sh-comprar" data-comprar="Remera Super Problemitas">Comprar &rarr;</button>
+    </article>
+    <article class="sh-prod sh-revelar" style="--alto:300px;--sube:26px">
+      <div class="sh-prod-img"><img src="img/remera_logo.webp" alt="Remera negra con el logo cromado de Shock2" loading="lazy"></div>
+      <h3 class="sh-prod-nombre">Logo clásica</h3>
+      <p class="sh-prod-desc">El logo cromado, nada más.</p>
+      <ul class="sh-talles" data-talles>
+        <li><button type="button" aria-pressed="false">S</button></li>
+        <li><button type="button" aria-pressed="false">M</button></li>
+        <li><button type="button" aria-pressed="false">L</button></li>
+        <li><button type="button" aria-pressed="false">XL</button></li>
+      </ul>
+      <p class="sh-prod-precio">$26.000</p>
+      <button class="sh-comprar" data-comprar="Remera Logo Clásica">Comprar &rarr;</button>
+    </article>
+    </div>
+  </div>
+
+  <div class="sh-grupo sh-revelar">
+    <div class="sh-grupo-cab"><h3>Birras</h3><span>Una por cada uno</span></div>
+    <p class="sh-edad">Venta exclusiva a mayores de 18 años</p>
+    <div class="sh-vitrina" style="--cols:5">
+    <article class="sh-prod sh-revelar" style="--alto:250px;--sube:0px">
+      <div class="sh-prod-img"><img src="img/lata_a.webp" alt="Lata de cerveza Stout de Shock2" loading="lazy"></div>
+      <p class="sh-prod-quien">La de Harry</p>
+      <h3 class="sh-prod-nombre">Stout</h3>
+      <p class="sh-prod-desc">Negra y tostada.</p>
+      <p class="sh-prod-precio">$6.500</p>
+      <button class="sh-comprar" data-comprar="Birra Stout">Comprar &rarr;</button>
+    </article>
+    <article class="sh-prod sh-revelar" style="--alto:250px;--sube:30px">
+      <div class="sh-prod-img"><img src="img/lata_b.webp" alt="Lata de cerveza Joney de Shock2" loading="lazy"></div>
+      <p class="sh-prod-quien">La de Jony</p>
+      <h3 class="sh-prod-nombre">Joney</h3>
+      <p class="sh-prod-desc">Con miel.</p>
+      <p class="sh-prod-precio">$6.500</p>
+      <button class="sh-comprar" data-comprar="Birra Joney">Comprar &rarr;</button>
+    </article>
+    <article class="sh-prod sh-revelar" style="--alto:250px;--sube:12px">
+      <div class="sh-prod-img"><img src="img/lata_c.webp" alt="Lata de cerveza Irish Red de Shock2" loading="lazy"></div>
+      <p class="sh-prod-quien">La de Gaby</p>
+      <h3 class="sh-prod-nombre">Irish Red</h3>
+      <p class="sh-prod-desc">Roja irlandesa.</p>
+      <p class="sh-prod-precio">$6.500</p>
+      <button class="sh-comprar" data-comprar="Birra Irish Red">Comprar &rarr;</button>
+    </article>
+    <article class="sh-prod sh-revelar" style="--alto:250px;--sube:40px">
+      <div class="sh-prod-img"><img src="img/lata_d.webp" alt="Lata de cerveza Blonde de Shock2" loading="lazy"></div>
+      <p class="sh-prod-quien">La de todos</p>
+      <h3 class="sh-prod-nombre">Blonde</h3>
+      <p class="sh-prod-desc">Rubia. Birra sobrecargada de rock.</p>
+      <p class="sh-prod-precio">$6.500</p>
+      <button class="sh-comprar" data-comprar="Birra Blonde">Comprar &rarr;</button>
+    </article>
+    <article class="sh-prod sh-revelar" style="--alto:250px;--sube:20px">
+      <div class="sh-prod-img"><img src="img/lata_e.webp" alt="Lata de cerveza Session IPA de Shock2" loading="lazy"></div>
+      <p class="sh-prod-quien">La de Litio</p>
+      <h3 class="sh-prod-nombre">Session IPA</h3>
+      <p class="sh-prod-desc">Lupulada y liviana.</p>
+      <p class="sh-prod-precio">$6.500</p>
+      <button class="sh-comprar" data-comprar="Birra Session IPA">Comprar &rarr;</button>
+    </article>
+    </div>
+  </div>
+
+  <div class="sh-grupo sh-revelar">
+    <div class="sh-grupo-cab"><h3>Objetos</h3><span>Para llevar encima</span></div>
+    <div class="sh-vitrina" style="--cols:3">
+    <article class="sh-prod sh-revelar" style="--alto:195px;--sube:76px">
+      <div class="sh-prod-img"><img src="img/pua.webp" alt="Púa de guitarra negra con el logo de Shock2" loading="lazy"></div>
+      <h3 class="sh-prod-nombre">Púa</h3>
+      <p class="sh-prod-desc">Con el logo y el rayo. Por unidad.</p>
+      <p class="sh-prod-precio">$3.500</p>
+      <button class="sh-comprar" data-comprar="Púa Shock2">Comprar &rarr;</button>
+    </article>
+    <article class="sh-prod sh-revelar" style="--alto:270px;--sube:0px">
+      <div class="sh-prod-img"><img src="img/apoya.webp" alt="Apoya celular impreso en 3D con el arte de Sobrecargado" loading="lazy"></div>
+      <h3 class="sh-prod-nombre">Apoya celular</h3>
+      <p class="sh-prod-desc">Impreso en 3D con el arte del disco.</p>
+      <p class="sh-prod-precio">$9.000</p>
+      <button class="sh-comprar" data-comprar="Apoya celular">Comprar &rarr;</button>
+    </article>
+    <article class="sh-prod sh-revelar" style="--alto:240px;--sube:34px">
+      <div class="sh-prod-img"><img src="img/stickers.webp" alt="Pack de cuatro stickers troquelados de los integrantes de Shock2" loading="lazy"></div>
+      <h3 class="sh-prod-nombre">Pack de stickers ×4</h3>
+      <p class="sh-prod-desc">Uno por cada integrante.</p>
+      <p class="sh-prod-precio">$4.500</p>
+      <button class="sh-comprar" data-comprar="Pack de stickers (x4)">Comprar &rarr;</button>
+    </article>
+    </div>
+  </div>
+
+  <div class="sh-envio sh-revelar">
+    <span><b>Envíos</b> a todo el país por Correo Argentino</span>
+    <span><b>Retiro</b> en mano a coordinar</span>
+    <span><b>Pago</b> transferencia o efectivo</span>
+  </div>
+</section>
+
+<!-- ===================== DISCO ===================== -->
+<section class="sh-seccion" id="disco">
+  <div class="sh-disco-grid">
+    <img class="sh-revelar" src="img/cover.webp" alt="Tapa de Sobrecargado" width="1180" height="1180" loading="lazy">
+    <div class="sh-revelar">
+      <p class="sh-nota">El disco</p>
+      <h2 class="sh-titulo">Sobrecargado</h2>
+      <p class="sh-intro">Pasame la lista de temas con las duraciones y las cargo acá.</p>
+      <ol class="sh-temas">
+        <li><span class="n">01</span> Tema uno <span class="dur">0:00</span></li>
+        <li><span class="n">02</span> Tema dos <span class="dur">0:00</span></li>
+        <li><span class="n">03</span> Tema tres <span class="dur">0:00</span></li>
+        <li><span class="n">04</span> Tema cuatro <span class="dur">0:00</span></li>
+        <li><span class="n">05</span> Tema cinco <span class="dur">0:00</span></li>
+        <li><span class="n">06</span> Tema seis <span class="dur">0:00</span></li>
+        <li><span class="n">07</span> Tema siete <span class="dur">0:00</span></li>
+        <li><span class="n">08</span> Tema ocho <span class="dur">0:00</span></li>
+      </ol>
+      <div class="sh-compra sh-prod">
+        <img class="sh-compra-cd" src="img/cd.webp" alt="CD Sobrecargado abierto, con el disco y la contratapa" loading="lazy">
+        <div>
+          <p class="sh-compra-precio sh-prod-precio">$15.000</p>
+          <p class="sh-compra-nota">CD físico en caja, con librito y arte completo.</p>
+        </div>
+        <button class="sh-comprar" data-comprar="Disco Sobrecargado (CD)">Comprar el CD &rarr;</button>
+      </div>
+      <div class="sh-acciones" style="margin-top:26px">
+        <a class="sh-btn fantasma" href="#" data-link="spotify">Spotify</a>
+        <a class="sh-btn fantasma" href="#" data-link="youtube">YouTube</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BANDA ===================== -->
+<section class="sh-seccion" id="banda">
+  <div class="sh-cabecera sh-revelar">
+    <p class="sh-nota">La banda</p>
+    <h2 class="sh-titulo">Quiénes<br>somos</h2>
+    <p class="sh-intro">Banda de rock pesado de Argentina. Cuatro integrantes, cuatro calaveras en la tapa. Mandame un par de párrafos con la historia y los meto acá.</p>
+  </div>
+  <ul class="sh-integrantes sh-revelar">
+    <li><span class="sh-int-nombre">Jony</span><span class="sh-int-rol">Bajo y voz</span></li>
+    <li><span class="sh-int-nombre">Harry</span><span class="sh-int-rol">Batería</span></li>
+    <li><span class="sh-int-nombre">Litio</span><span class="sh-int-rol">Guitarra eléctrica y voz</span></li>
+    <li><span class="sh-int-nombre">Gaby</span><span class="sh-int-rol">Sintetizadores y voz</span></li>
+  </ul>
+</section>
+
+<!-- ===================== CONTACTO ===================== -->
+<section class="sh-seccion" id="contacto">
+  <div class="sh-cabecera sh-revelar">
+    <p class="sh-nota">Contacto</p>
+    <h2 class="sh-titulo">Escribinos</h2>
+    <p class="sh-intro">Para pedidos, fechas, contrataciones o lo que sea. Contestamos por cualquiera de estos lados.</p>
+  </div>
+  <ul class="sh-contactos sh-revelar">
+    <li>
+      <a href="https://instagram.com/shock2.hr" target="_blank" rel="noopener">
+        <span class="sh-cont-que">Instagram</span>
+        <span class="sh-cont-dato">@shock2.hr</span>
+        <span class="sh-cont-flecha">→</span>
+      </a>
+    </li>
+    <li>
+      <a href="#" data-wsp>
+        <span class="sh-cont-que">WhatsApp</span>
+        <span class="sh-cont-dato">Pedidos y consultas</span>
+        <span class="sh-cont-flecha">→</span>
+      </a>
+    </li>
+    <li>
+      <a href="#" data-link="facebook">
+        <span class="sh-cont-que">Facebook</span>
+        <span class="sh-cont-dato">Shock2</span>
+        <span class="sh-cont-flecha">→</span>
+      </a>
+    </li>
+    <li>
+      <a href="mailto:contacto@shock2.com.ar">
+        <span class="sh-cont-que">Contrataciones</span>
+        <span class="sh-cont-dato">contacto@shock2.com.ar</span>
+        <span class="sh-cont-flecha">→</span>
+      </a>
+    </li>
+  </ul>
+</section>
+
+<footer class="sh-pie">
+  <div class="sh-pie-inner">
+    <span>Shock2 — Sobrecargado</span>
+    <span>Argentina</span>
+  </div>
+</footer>
+
+
+</body>
+</html>
