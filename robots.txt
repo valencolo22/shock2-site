@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://valencolo22.github.io/shock2-site/sitemap.xml
