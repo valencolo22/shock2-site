@@ -2,7 +2,7 @@
 <html lang="es-AR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Shock2 | Rock pesado argentino — Disco Sobrecargado y merch oficial</title>
 <meta name="description" content="Shock2 es una banda de rock pesado de Argentina. Comprá el disco Sobrecargado en CD, remeras, birras artesanales y merch oficial con envíos a todo el país.">
 <link rel="canonical" href="https://valencolo22.github.io/shock2-site/">
@@ -43,7 +43,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  margin:0;background:var(--negro);color:var(--cromo);
+  margin:0;background:var(--negro);overflow-wrap:break-word;color:var(--cromo);
   font-family:var(--texto);font-size:16px;line-height:1.6;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
@@ -119,6 +119,7 @@ a{color:inherit}
 /* ---------- botones ---------- */
 .sh-btn{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;
   letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:14px 24px;
+  min-width:206px;text-align:center;
   border:1px solid var(--violeta-claro);color:var(--violeta-claro);background:transparent;
   cursor:pointer;transition:background .18s,color .18s,border-color .18s}
 .sh-btn:hover{background:var(--violeta);border-color:var(--violeta);color:#fff}
@@ -142,7 +143,7 @@ a{color:inherit}
 .sh-encabezado{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.24em;
   text-transform:uppercase;color:var(--voltio);margin:0 0 18px;
   text-shadow:0 1px 10px rgba(8,7,9,.9)}
-.sh-wordmark{font-family:var(--display);font-weight:900;font-size:clamp(58px,9.5vw,132px);
+.sh-wordmark{font-family:var(--display);font-weight:900;font-size:clamp(46px,11vw,132px);
   line-height:.86;letter-spacing:.01em;margin:0;color:var(--cromo);text-transform:uppercase;
   text-shadow:0 6px 40px rgba(8,7,9,.95)}
 .sh-subtitulo{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,54px);
@@ -172,7 +173,7 @@ a{color:inherit}
 
 /* ---------- secciones ---------- */
 .sh-seccion{max-width:1140px;margin:0 auto;padding:100px 24px}
-.sh-titulo{font-family:var(--display);font-weight:900;font-size:clamp(44px,7vw,86px);
+.sh-titulo{font-family:var(--display);font-weight:900;font-size:clamp(38px,8vw,86px);
   line-height:.9;letter-spacing:.02em;margin:0;text-transform:uppercase;
   text-shadow:0 4px 30px rgba(8,7,9,.85)}
 .sh-nota{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.2em;
@@ -296,7 +297,7 @@ a{color:inherit}
 .sh-contactos a:hover{padding-left:16px;color:var(--voltio)}
 .sh-cont-que{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.18em;
   text-transform:uppercase;color:#C4C0CB;text-shadow:0 1px 10px rgba(8,7,9,.9)}
-.sh-cont-dato{font-family:var(--display);font-weight:700;font-size:clamp(24px,3.4vw,38px);
+.sh-cont-dato{font-family:var(--display);font-weight:700;font-size:clamp(21px,5vw,38px);
   letter-spacing:.03em;text-transform:uppercase;line-height:1.05}
 .sh-cont-flecha{font-family:var(--mono);font-size:18px;color:var(--humo)}
 .sh-contactos a:hover .sh-cont-flecha{color:var(--voltio)}
@@ -322,29 +323,95 @@ a{color:inherit}
 .sh-revelar{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
 .sh-revelar.visible{opacity:1;transform:none}
 
+/* ============ ADAPTACION A PANTALLAS CHICAS ============ */
+
+/* --- notebooks chicas --- */
 @media (max-width:1100px){
   .sh-vitrina{grid-template-columns:repeat(3,1fr);gap:40px 24px}
+  .sh-nav-links{gap:12px 32px}
+  .sh-pie-grid{grid-template-columns:1.4fr repeat(2,1fr);gap:40px 28px}
 }
-@media (max-width:760px){
-  .sh-vitrina{grid-template-columns:repeat(2,1fr);gap:36px 20px}
-}
-@media (max-width:760px){
-  .sh-portada{padding-bottom:96px}
-  .sh-cabezal{flex-wrap:wrap;padding:24px 20px 18px;gap:18px}
-  .sh-cabezal nav{order:3;width:100%}
-  .sh-nav-links{justify-content:flex-start;gap:12px 28px}
-}
+
+/* --- tablets: el hero y el disco se apilan --- */
 @media (max-width:900px){
-  .sh-hero-grid,.sh-disco-grid{grid-template-columns:1fr;gap:40px}
+  .sh-seccion{padding:72px 22px}
+  .sh-hero{padding:44px 22px 90px}
+  .sh-hero-grid,.sh-disco-grid{grid-template-columns:1fr;gap:38px}
   .sh-hero-art{order:-1;max-width:420px;margin:0 auto}
-  .sh-arte-cd{right:0;width:62%}
-  .sh-disco-tapa{margin-top:0}
-  .sh-seccion{padding:72px 20px}
-  .sh-contactos a{grid-template-columns:1fr auto;gap:6px 16px}
-  .sh-integrantes{grid-template-columns:repeat(2,1fr);gap:22px}
+  .sh-arte-tapa{width:72%;margin-left:0}
+  .sh-arte-cd{right:0;width:60%}
+  .sh-disco-tapa{margin-top:0;max-width:460px}
+  .sh-integrantes{grid-template-columns:repeat(2,1fr);gap:24px}
+  .sh-contactos a{grid-template-columns:1fr auto;gap:4px 16px;padding:22px 4px}
+  .sh-cont-que{grid-column:1/-1}
   .sh-pie-grid{grid-template-columns:repeat(2,1fr);gap:34px 24px}
   .sh-pie-marca{grid-column:1/-1}
-  .sh-cont-que{grid-column:1/-1}
+  .sh-regalo-fotos img{height:120px}
+  .sh-regalo-fotos img:last-child{height:150px}
+}
+
+/* --- celulares --- */
+@media (max-width:760px){
+  .sh-portada{padding-bottom:80px}
+  .sh-cabezal{flex-wrap:wrap;padding:22px 20px 16px;gap:16px}
+  .sh-cabezal-logo{flex:0 0 auto}
+  .sh-cabezal-icono{flex:0 0 auto}
+  .sh-cabezal nav{order:3;width:100%}
+  .sh-nav-links{justify-content:space-between;gap:10px 18px;font-size:10.5px;
+    letter-spacing:.14em}
+  .sh-vitrina{grid-template-columns:repeat(2,1fr);gap:34px 18px}
+  .sh-seccion{padding:60px 20px}
+  .sh-cinta-pista{font-size:20px;gap:26px}
+  .sh-cinta-pista span{gap:26px}
+  /* la lectura del medidor tapa contenido en pantallas chicas */
+  .sh-lectura{display:none}
+}
+
+/* --- celulares angostos --- */
+@media (max-width:520px){
+  .sh-hero{padding:32px 18px 72px}
+  .sh-seccion{padding:52px 18px}
+  .sh-hero-art{max-width:300px}
+  .sh-bajada{max-width:none}
+  /* botones comodos para el dedo */
+  .sh-acciones{gap:10px}
+  .sh-acciones .sh-btn{flex:1 1 100%;min-width:0;padding:15px 18px}
+  .sh-btn{padding:15px 20px;min-width:0}
+  .sh-comprar{padding:8px 0;display:inline-block}
+  .sh-talles button,.sh-colores button{min-width:38px;min-height:34px}
+  .sh-colores button{width:26px;height:26px;min-width:0}
+  /* un producto por fila: se ven bien las fotos */
+  .sh-vitrina{grid-template-columns:1fr;gap:44px}
+  .sh-prod-img{height:280px}
+  .sh-prod-desc{min-height:0}
+  .sh-grupo{margin-top:56px}
+  .sh-grupo-cab{flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:24px}
+  .sh-grupo-cab span{text-align:left}
+  .sh-pack{gap:12px}
+  .sh-pack .sh-comprar{margin-left:0}
+  .sh-regalo{gap:22px;margin-top:56px;padding-top:32px}
+  .sh-regalo-fotos{gap:20px}
+  .sh-regalo-fotos img{height:94px}
+  .sh-regalo-fotos img:last-child{height:118px}
+  .sh-envio{gap:8px 0;flex-direction:column;margin-top:56px}
+  .sh-integrantes{gap:20px 16px}
+  .sh-int-nombre{font-size:26px}
+  .sh-temas li{font-size:14px;gap:12px}
+  .sh-compra{gap:14px 20px}
+  .sh-compra-fotos img{height:82px}
+  .sh-compra-fotos img:last-child{height:94px}
+  .sh-pie{padding:48px 20px 26px}
+  .sh-pie-grid{grid-template-columns:1fr;gap:28px}
+  .sh-pie-abajo{margin-top:36px;gap:6px}
+  .sh-cinta-pista{font-size:17px;gap:20px}
+  .sh-cinta-pista span{gap:20px}
+}
+
+/* --- celulares muy chicos --- */
+@media (max-width:380px){
+  .sh-nav-links{font-size:10px;letter-spacing:.1em;gap:8px 12px}
+  .sh-hero-art{max-width:260px}
+  .sh-prod-img{height:250px}
 }
 
 @media (prefers-reduced-motion:reduce){
