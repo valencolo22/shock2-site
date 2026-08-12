@@ -40,12 +40,13 @@
   --texto:'Archivo','Helvetica Neue',Arial,sans-serif;
   --mono:'Space Mono',ui-monospace,monospace;
 }
-*{box-sizing:border-box}
+*{box-sizing:border-box;min-width:0}
+html{overflow-x:hidden;max-width:100%}
 html{scroll-behavior:smooth}
 body{
-  margin:0;background:var(--negro);overflow-wrap:break-word;color:var(--cromo);
+  margin:0;background:var(--negro);color:var(--cromo);
   font-family:var(--texto);font-size:16px;line-height:1.6;
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;max-width:100%;
 }
 img{max-width:100%;height:auto;display:block}
 .sh-oculto{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
@@ -119,7 +120,7 @@ a{color:inherit}
 /* ---------- botones ---------- */
 .sh-btn{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;
   letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:14px 24px;
-  min-width:206px;text-align:center;
+  min-width:min(206px,100%);max-width:100%;text-align:center;
   border:1px solid var(--violeta-claro);color:var(--violeta-claro);background:transparent;
   cursor:pointer;transition:background .18s,color .18s,border-color .18s}
 .sh-btn:hover{background:var(--violeta);border-color:var(--violeta);color:#fff}
@@ -139,11 +140,12 @@ a{color:inherit}
 .sh-hero{padding:64px 24px 120px}
 .sh-hero-grid{position:relative;z-index:1}
 .sh-hero-grid{max-width:1220px;margin:0 auto;display:grid;
-  grid-template-columns:1fr 1.15fr;gap:40px;align-items:center}
+  grid-template-columns:1.08fr 1fr;gap:40px;align-items:center}
 .sh-encabezado{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.24em;
   text-transform:uppercase;color:var(--voltio);margin:0 0 18px;
   text-shadow:0 1px 10px rgba(8,7,9,.9)}
-.sh-wordmark{font-family:var(--display);font-weight:900;font-size:clamp(46px,11vw,132px);
+.sh-wordmark{font-family:var(--display);font-weight:900;
+  font-size:clamp(40px,6.9vw,102px);white-space:nowrap;hyphens:none;
   line-height:.86;letter-spacing:.01em;margin:0;color:var(--cromo);text-transform:uppercase;
   text-shadow:0 6px 40px rgba(8,7,9,.95)}
 .sh-subtitulo{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,54px);
@@ -152,7 +154,7 @@ a{color:inherit}
 .sh-bajada{max-width:38ch;color:var(--cromo);font-weight:500;margin:22px 0 30px;
   text-shadow:0 1px 12px rgba(8,7,9,.95)}
 .sh-acciones{display:flex;flex-wrap:wrap;gap:12px}
-.sh-hero-art{position:relative;margin:0}
+.sh-hero-art{position:relative;margin:0;max-width:100%}
 .sh-arte-tapa{position:relative;z-index:1;width:74%;margin-left:2%;
   box-shadow:0 36px 76px rgba(0,0,0,.9)}
 /* el disco asoma por detras de la tapa y gira */
@@ -173,7 +175,8 @@ a{color:inherit}
 
 /* ---------- secciones ---------- */
 .sh-seccion{max-width:1140px;margin:0 auto;padding:100px 24px}
-.sh-titulo{font-family:var(--display);font-weight:900;font-size:clamp(38px,8vw,86px);
+.sh-titulo{font-family:var(--display);font-weight:900;font-size:clamp(36px,6.4vw,82px);
+  hyphens:none;
   line-height:.9;letter-spacing:.02em;margin:0;text-transform:uppercase;
   text-shadow:0 4px 30px rgba(8,7,9,.85)}
 .sh-nota{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.2em;
@@ -238,40 +241,46 @@ a{color:inherit}
 
 /* ---------- disco ---------- */
 .sh-disco-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:start}
-.sh-disco-tapa{margin-top:30px;box-shadow:0 40px 90px rgba(0,0,0,.85)}
+.sh-disco-tapa{margin-top:30px;width:100%;max-width:420px;
+  box-shadow:0 40px 90px rgba(0,0,0,.85)}
 .sh-temas{list-style:none;margin:26px 0 0;padding:0;border-top:1px solid var(--linea)}
-.sh-temas li{display:flex;align-items:baseline;gap:16px;padding:12px 2px;
+.sh-temas li{display:flex;align-items:baseline;gap:12px;padding:12px 2px;
   border-bottom:1px solid var(--linea);font-size:15px;font-weight:500;
   text-shadow:0 1px 10px rgba(8,7,9,.9)}
-.sh-temas .n{font-family:var(--mono);font-size:12px;color:var(--voltio);min-width:26px}
-.sh-temas .dur{margin-left:auto;font-family:var(--mono);font-size:12px;font-weight:700;
+.sh-temas li>span:not(.n):not(.dur){flex:1 1 auto}
+.sh-temas .n{font-family:var(--mono);font-size:12px;color:var(--voltio);
+  flex:0 0 26px;min-width:26px}
+.sh-temas .dur{margin-left:auto;flex:0 0 auto;font-family:var(--mono);font-size:12px;font-weight:700;
   color:#C4C0CB;text-shadow:0 1px 10px rgba(8,7,9,.9)}
 .sh-pack{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;margin-top:52px;
   padding:24px 0 0;border-top:1px solid var(--linea)}
-.sh-pack-titulo{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:.05em;
+.sh-pack-titulo{font-family:var(--display);font-weight:800;font-size:clamp(24px,5vw,30px);
+  letter-spacing:.05em;
   text-transform:uppercase;margin:0;line-height:1}
 .sh-pack-desc{font-size:13.5px;color:#B9B5C0;font-weight:500;margin:6px 0 0;
   text-shadow:0 1px 10px rgba(8,7,9,.9)}
 .sh-pack .sh-comprar{margin-left:auto}
 
 .sh-regalo{display:flex;flex-wrap:wrap;align-items:center;gap:32px 56px;margin-top:76px;
+  max-width:100%;
   padding-top:40px;border-top:1px solid var(--linea)}
-.sh-regalo-fotos{display:flex;align-items:flex-end;gap:30px;flex:none}
+.sh-regalo-fotos{display:flex;align-items:flex-end;gap:30px;flex:0 1 auto;max-width:100%}
 .sh-regalo-fotos img{height:150px;width:auto;
   filter:drop-shadow(0 20px 34px rgba(0,0,0,.85))}
 .sh-regalo-fotos img:last-child{height:190px}
 .sh-regalo-titulo{font-family:var(--display);font-weight:900;
-  font-size:clamp(40px,6vw,68px);letter-spacing:.04em;
+  font-size:clamp(30px,7vw,68px);letter-spacing:.04em;
   text-transform:uppercase;margin:0;line-height:.92}
 .sh-regalo-titulo em{font-style:normal;color:var(--voltio)}
 .sh-regalo-desc{font-size:15px;color:var(--cromo);font-weight:500;margin:14px 0 0;max-width:42ch;
   text-shadow:0 1px 10px rgba(8,7,9,.9)}
 
-.sh-compra-fotos{display:flex;align-items:flex-end;gap:14px;flex:none}
+.sh-compra-fotos{display:flex;align-items:flex-end;gap:14px;flex:0 1 auto;max-width:100%}
 .sh-compra-fotos img{height:104px;width:auto;filter:drop-shadow(0 16px 26px rgba(0,0,0,.8))}
 .sh-compra-fotos img:last-child{height:118px}
 .sh-compra{display:flex;flex-wrap:wrap;align-items:center;gap:16px 26px;margin-top:32px;
   padding-top:26px;border-top:1px solid var(--linea)}
+.sh-compra>div{flex:1 1 200px}
 .sh-compra-precio{font-family:var(--mono);font-weight:700;font-size:24px;color:var(--voltio);margin:0}
 .sh-compra-nota{font-size:13px;color:var(--humo);margin:4px 0 0;max-width:34ch}
 
@@ -297,7 +306,8 @@ a{color:inherit}
 .sh-contactos a:hover{padding-left:16px;color:var(--voltio)}
 .sh-cont-que{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.18em;
   text-transform:uppercase;color:#C4C0CB;text-shadow:0 1px 10px rgba(8,7,9,.9)}
-.sh-cont-dato{font-family:var(--display);font-weight:700;font-size:clamp(21px,5vw,38px);
+.sh-cont-dato{font-family:var(--display);font-weight:700;font-size:clamp(18px,4.6vw,38px);
+  overflow-wrap:anywhere;
   letter-spacing:.03em;text-transform:uppercase;line-height:1.05}
 .sh-cont-flecha{font-family:var(--mono);font-size:18px;color:var(--humo)}
 .sh-contactos a:hover .sh-cont-flecha{color:var(--voltio)}
@@ -313,6 +323,7 @@ a{color:inherit}
 .sh-pie-col h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--voltio);margin:0 0 16px;font-weight:700}
 .sh-pie-col a{color:var(--cromo);text-decoration:none;font-size:15px;padding:5px 0;
+  overflow-wrap:anywhere;
   transition:color .18s}
 .sh-pie-col a:hover{color:var(--voltio)}
 .sh-pie-abajo{max-width:1220px;margin:52px auto 0;padding-top:22px;border-top:1px solid var(--linea);
@@ -340,7 +351,7 @@ a{color:inherit}
   .sh-hero-art{order:-1;max-width:420px;margin:0 auto}
   .sh-arte-tapa{width:72%;margin-left:0}
   .sh-arte-cd{right:0;width:60%}
-  .sh-disco-tapa{margin-top:0;max-width:460px}
+  .sh-disco-tapa{margin-top:0;max-width:340px;margin-inline:auto}
   .sh-integrantes{grid-template-columns:repeat(2,1fr);gap:24px}
   .sh-contactos a{grid-template-columns:1fr auto;gap:4px 16px;padding:22px 4px}
   .sh-cont-que{grid-column:1/-1}
@@ -370,8 +381,10 @@ a{color:inherit}
 /* --- celulares angostos --- */
 @media (max-width:520px){
   .sh-hero{padding:32px 18px 72px}
+  .sh-wordmark{font-size:min(11.4vw,72px)}
   .sh-seccion{padding:52px 18px}
   .sh-hero-art{max-width:300px}
+  .sh-disco-tapa{max-width:280px}
   .sh-bajada{max-width:none}
   /* botones comodos para el dedo */
   .sh-acciones{gap:10px}
@@ -387,17 +400,23 @@ a{color:inherit}
   .sh-grupo{margin-top:56px}
   .sh-grupo-cab{flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:24px}
   .sh-grupo-cab span{text-align:left}
-  .sh-pack{gap:12px}
+  .sh-pack{gap:12px;flex-direction:column;align-items:flex-start}
   .sh-pack .sh-comprar{margin-left:0}
-  .sh-regalo{gap:22px;margin-top:56px;padding-top:32px}
+  .sh-regalo{gap:20px;margin-top:56px;padding-top:32px}
+  .sh-regalo-desc{max-width:none}
   .sh-regalo-fotos{gap:20px}
   .sh-regalo-fotos img{height:94px}
   .sh-regalo-fotos img:last-child{height:118px}
   .sh-envio{gap:8px 0;flex-direction:column;margin-top:56px}
   .sh-integrantes{gap:20px 16px}
   .sh-int-nombre{font-size:26px}
-  .sh-temas li{font-size:14px;gap:12px}
-  .sh-compra{gap:14px 20px}
+  .sh-temas li{font-size:14px;gap:10px;padding:11px 0}
+  .sh-temas .n{flex:0 0 22px;min-width:22px;font-size:11px}
+  .sh-temas .dur{font-size:11px}
+  .sh-compra{gap:14px 18px}
+  .sh-compra>div{flex:1 1 100%}
+  .sh-compra .sh-comprar{flex:1 1 100%}
+  .sh-compra-precio{font-size:21px}
   .sh-compra-fotos img{height:82px}
   .sh-compra-fotos img:last-child{height:94px}
   .sh-pie{padding:48px 20px 26px}
@@ -410,7 +429,9 @@ a{color:inherit}
 /* --- celulares muy chicos --- */
 @media (max-width:380px){
   .sh-nav-links{font-size:10px;letter-spacing:.1em;gap:8px 12px}
+  .sh-wordmark{font-size:min(11.6vw,60px)}
   .sh-hero-art{max-width:260px}
+  .sh-disco-tapa{max-width:240px}
   .sh-prod-img{height:250px}
 }
 
