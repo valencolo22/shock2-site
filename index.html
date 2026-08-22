@@ -263,14 +263,10 @@ a{color:inherit}
 .sh-compra-fotos img{height:104px;width:auto;filter:drop-shadow(0 16px 26px rgba(0,0,0,.8))}
 .sh-compra-fotos img:last-child{height:118px}
 /* reproductor de Spotify */
-.sh-escuchar{position:relative;margin-top:26px;min-height:352px;
-  border:1px solid var(--linea);background:#101014}
-.sh-escuchar iframe{position:relative;z-index:1;display:block;width:100%;border:0}
-/* si el reproductor no carga, queda esto a la vista */
-.sh-escuchar-alt{position:absolute;inset:0;z-index:0;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px}
-.sh-escuchar-alt p{font-size:14px;color:#B9B5C0;font-weight:500;margin:0;max-width:34ch}
+.sh-escuchar{margin-top:26px}
+.sh-escuchar iframe{display:block;width:100%;border:0;background:#101014;border-radius:10px}
 .sh-escuchar-nota{font-size:12.5px;color:#B9B5C0;font-weight:500;margin:12px 0 0;line-height:1.55}
+.sh-escuchar-nota a{color:var(--violeta-claro);text-decoration:underline;text-underline-offset:3px}
 .sh-compra{display:flex;flex-wrap:wrap;align-items:center;gap:16px 26px;margin-top:32px;
   padding-top:26px;border-top:1px solid var(--linea)}
 .sh-compra>div{flex:1 1 200px}
@@ -378,7 +374,7 @@ a{color:inherit}
   .sh-hist-texto{margin-inline:auto;max-width:62ch;width:100%}
   .sh-hist-texto p{text-align:justify;hyphens:auto}
   .sh-hist-foto{max-width:560px;margin-inline:auto;width:100%}
-  .sh-escuchar,.sh-escuchar iframe{min-height:400px;height:400px}
+  .sh-escuchar iframe{height:400px}
   .sh-contactos a{grid-template-columns:1fr auto;gap:4px 16px;padding:22px 4px}
   .sh-cont-que{grid-column:1/-1}
   .sh-pie-grid{grid-template-columns:repeat(2,1fr);gap:34px 24px}
@@ -397,7 +393,7 @@ a{color:inherit}
   .sh-vitrina{grid-template-columns:repeat(2,1fr);gap:34px 18px}
   .sh-seccion{padding:60px 20px}
   .sh-hist-texto p{font-size:15px;line-height:1.72}
-  .sh-escuchar,.sh-escuchar iframe{min-height:380px;height:380px}
+  .sh-escuchar iframe{height:380px}
   .sh-vistas button{padding:6px 12px;font-size:10.5px}
   .sh-cinta-pista{font-size:20px;gap:26px}
   .sh-cinta-pista span{gap:26px}
@@ -456,7 +452,7 @@ a{color:inherit}
   .sh-hero-art{max-width:260px}
   .sh-disco-tapa{max-width:240px}
   .sh-prod-img{height:250px}
-  .sh-escuchar,.sh-escuchar iframe{min-height:352px;height:352px}
+  .sh-escuchar iframe{height:352px}
   .sh-int-nombre{font-size:21px}
 }
 
@@ -902,10 +898,6 @@ a{color:inherit}
         <button class="sh-comprar" data-comprar="CD Sobrecargado + apoya celular">Comprar &rarr;</button>
       </div>
       <div class="sh-escuchar">
-        <div class="sh-escuchar-alt">
-          <p>Si el reproductor no carga en tu navegador, escuchá el disco directamente en Spotify.</p>
-          <a class="sh-btn" href="https://open.spotify.com/album/5t9v4v0d7y8lSTRGd4iABl" target="_blank" rel="noopener">Abrir en Spotify</a>
-        </div>
         <iframe title="Sobrecargado de Shock2 en Spotify"
           src="https://open.spotify.com/embed/album/5t9v4v0d7y8lSTRGd4iABl?utm_source=generator&amp;theme=0"
           width="100%" height="420" frameborder="0"
